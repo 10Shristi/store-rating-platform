@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const authenticate = require("../middleware/authMiddleware");
-const authorizeRoles = require("../middleware/roleMiddleware");
+
+// ✅ AUTH MIDDLEWARE (CHECK PATH CAREFULLY)
+const { authenticate, authorizeRoles } = require("../middleware/authMiddleware");
+
+// ✅ CONTROLLER
 const userController = require("../controllers/userController");
 
+// USER ROUTES
 router.get(
   "/stores",
   authenticate,
@@ -17,6 +21,7 @@ router.post(
   authorizeRoles(["USER"]),
   userController.rateStore
 );
+
 router.put(
   "/update-password",
   authenticate,
@@ -25,3 +30,4 @@ router.put(
 );
 
 module.exports = router;
+
